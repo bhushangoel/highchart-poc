@@ -37,8 +37,8 @@ export class LineChartComponent implements OnInit {
     // harcoding multiple config for now
     // this should depend on the type sent by parent
     // data should be sent by chart component | modified according to type
-    // this.lineChartConfig = JSON.parse(JSON.stringify(<any>lineChart.lineChartMultiple));
-    this.lineChartConfig = <any>lineChart.lineChartMultiple;
+    this.lineChartConfig = JSON.parse(JSON.stringify(<any>lineChart.lineChartMultiple));
+    // this.lineChartConfig = <any>lineChart.lineChartMultiple;
     // using directive
     this.defineConfigNew();
     // using service
