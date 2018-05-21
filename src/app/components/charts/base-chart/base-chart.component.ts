@@ -13,6 +13,7 @@ export class BaseChartComponent implements OnInit {
   @Input() selection: string;
   @Input() category: string;
   showChart: string;
+  showDatatable: boolean;
   data;
 
   constructor(private dataService: DataService) {

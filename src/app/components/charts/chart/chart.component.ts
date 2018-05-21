@@ -2,8 +2,6 @@ import {Component, OnInit, Input, ViewChild, ElementRef} from '@angular/core';
 import * as config from './chart.config';
 import {HighchartService} from '../services/highchart.service';
 import {LinechartService} from './services/line-chart.service';
-import {ChartModule} from 'angular2-highcharts';
-
 
 export interface ChartItem {
   status: string;
@@ -25,8 +23,6 @@ export class ChartComponent implements OnInit {
   showHeatmap: boolean;
   showTable: boolean;
   options: Object;
-  highchartContext;
-  event;
   chartConfig;
 
   constructor(private hcs: HighchartService, private lcs: LinechartService) {

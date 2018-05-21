@@ -13,13 +13,15 @@ import {AppComponent} from './app.component';
 import {BaseChartComponent} from './components/charts/base-chart/base-chart.component';
 import { ChartComponent } from './components/charts/chart/chart.component';
 import { DataTableComponent } from './components/data-table/data-table.component';
+import { HeatMapComponent } from './components/charts/heat-map/heat-map.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     BaseChartComponent,
     ChartComponent,
-    DataTableComponent
+    DataTableComponent,
+    HeatMapComponent
   ],
   imports: [
     BrowserModule,
