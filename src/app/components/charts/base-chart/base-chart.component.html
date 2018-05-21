@@ -1,0 +1,4 @@
+<app-chart *ngIf="category == 'chart'" [selection]="selection" [chartdata]="data" [type]="type"></app-chart>
+<!--<bar-base-chart></bar-base-chart>-->
+<!--<app-heat-map *ngIf="showChart == 'heatmap'"></app-heat-map>-->
+<app-data-table *ngIf="category == 'datatable'" [chartdata]="data"></app-data-table>

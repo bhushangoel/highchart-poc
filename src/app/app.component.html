@@ -3,7 +3,9 @@
 </div>
 
 <!--
-@app-chart
+@app-base-chart
+  @attr: category
+    chart | datatable
   @attr: type
     line || bar
   @attr: selection
@@ -13,4 +15,6 @@
       single-reject -> single point can be removed at a time
 -->
 
-<app-chart type="line" selection="multiple"></app-chart>
+<app-base-chart category="chart" type="lineChart" selection="multiple"></app-base-chart>
+<app-base-chart category="chart" type="heatmap"></app-base-chart>
+<app-base-chart category="datatable"></app-base-chart>

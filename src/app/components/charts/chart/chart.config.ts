@@ -23,7 +23,7 @@ const lineChartSingle = {
   }]
 };
 
-const lineChartMultiple = {
+const lineChart = {
   title: {
     text: 'Commodities',  // data
     x: -20 // center
@@ -32,12 +32,12 @@ const lineChartMultiple = {
     text: '',
     x: -20
   },
-  tooltip: false,
+  tooltip: {},
   xAxis: {
     title: {
       text: 'Instrument type' // data
     },
-    categories: [60, 70, 80, 81, 90, 95, 96, 97, 98, 99, 101, 102, 108, 110, 120, 130, 150, 175, 200] // data
+    categories: [60, 70, 80, 81, 90, 95, 96, 97, 98, 99, 101, 102, 108, 110, 120, 130, 150, 175, 200, 210, 220, 230, 240] // data
   },
   yAxis: {
     title: {
@@ -58,6 +58,31 @@ const lineChartMultiple = {
   chart: {
     type: 'line',
     zoomType: 'xy'
+  },
+  exporting: {
+    buttons: {
+      toggleButton: {
+        text: 'ON',
+        onclick: function () {
+          alert('hi');
+          /* var button = this.exportSVGElements[0],
+             $button = $(button.element);
+           text = $button.text() == 'ON' ? 'OFF' : 'ON';
+
+           button.attr({
+             text: text
+           });*/
+        }
+      },
+      customButton: {
+        x: 62,
+        align: 'left',
+        text: 'Show All',
+        onclick: function () {
+          console.log('hey..');
+        }
+      }
+    }
   },
   series: [
     { // data
@@ -83,7 +108,9 @@ const lineChartMultiple = {
         {name: 'p18', y: 21.5, clientId: 'client18', rejected: false},
         {name: 'p19', y: 25.2, clientId: 'client19', rejected: false}]
     }, {
+      id: 'acc',
       name: 'C2',
+      // data:[-0.2, 0.8, 5.7, 14.5, 18.2, 21.5, 24.8, 24.1, 20.1, 14.1, 8.6, 2.5, 17, 18.6, 17.9, 14.3, 9, 3.9, 1, 19],
       data: [
         {name: 'p1', y: -0.2, clientId: 'client1', rejected: false, x: 0},
         {name: 'p2', y: 0.8, clientId: 'client2', rejected: false, x: 1},
@@ -110,6 +137,7 @@ const lineChartMultiple = {
       name: 'C2',
       dashStyle: 'dot',
       color: 'black',
+      linkedTo: 'acc',    //link to previous series data
       data: [
         {name: 'p16', x: 19, y: 14.3, clientId: 'client16', rejected: true},
         {name: 'p17', x: 20, y: 9, clientId: 'client17', rejected: true},
@@ -120,4 +148,72 @@ const lineChartMultiple = {
   ]
 };
 
-export {lineChartSingle, lineChartMultiple};
+const heatmap = {
+
+  chart: {
+    type: 'heatmap',
+    marginTop: 40,
+    marginBottom: 80,
+    plotBorderWidth: 1
+  },
+
+
+  title: {
+    text: 'Sales per employee per weekday'
+  },
+
+  xAxis: {
+    categories: ['Alexander', 'Marie', 'Maximilian', 'Sophia', 'Lukas', 'Maria', 'Leon', 'Anna', 'Tim', 'Laura']
+  },
+
+  yAxis: {
+    categories: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+    title: null
+  },
+
+  colorAxis: {
+    min: 0,
+    minColor: '#FFFFFF',
+    maxColor: 'blue'
+  },
+
+  legend: {
+    align: 'right',
+    layout: 'vertical',
+    margin: 0,
+    verticalAlign: 'top',
+    y: 25,
+    symbolHeight: 280
+  },
+
+  tooltip: {
+    formatter: function () {
+      return '<b>' + this.series.xAxis.categories[this.point.x] + '</b> sold <br><b>' +
+        this.point.value + '</b> items on <br><b>' + this.series.yAxis.categories[this.point.y] + '</b>';
+    }
+  },
+
+  series: [{
+    name: 'Sales per employee',
+    borderWidth: 1,
+    data: [[0, 0, 10], [0, 1, 19], [0, 2, 8], [0, 3, 24], [0, 4, 67], [1, 0, 92], [1, 1, 58], [1, 2, 78], [1, 3, 117], [1, 4, 48], [2, 0, 35], [2, 1, 15], [2, 2, 123], [2, 3, 64], [2, 4, 52], [3, 0, 72], [3, 1, 132], [3, 2, 114], [3, 3, 19], [3, 4, 16], [4, 0, 38], [4, 1, 5], [4, 2, 8], [4, 3, 117], [4, 4, 115], [5, 0, 88], [5, 1, 32], [5, 2, 12], [5, 3, 6], [5, 4, 120], [6, 0, 13], [6, 1, 44], [6, 2, 88], [6, 3, 98], [6, 4, 96], [7, 0, 31], [7, 1, 1], [7, 2, 82], [7, 3, 32], [7, 4, 30], [8, 0, 85], [8, 1, 97], [8, 2, 123], [8, 3, 64], [8, 4, 84], [9, 0, 47], [9, 1, 114], [9, 2, 31], [9, 3, 48], [9, 4, 91]],
+    dataLabels: {
+      enabled: true,
+      color: '#000000'
+    }
+  }]
+
+};
+
+const sampleConfig = {
+  highchart: {
+    // highchart related config will go here
+  },
+  general: {
+    // general config like
+    // display
+    // controls will go here
+  }
+};
+
+export {lineChartSingle, lineChart, heatmap};

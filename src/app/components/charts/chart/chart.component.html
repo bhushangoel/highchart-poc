@@ -1,3 +1,23 @@
-<app-line-chart *ngIf="showChart == 'line'" [selection]="selection" [chartdata]="data"></app-line-chart>
-<!--<bar-chart></bar-chart>-->
+<!--<div id="line-container" style="height: 400px; width: 500px"></div>-->
+<!--data : {{chartdata|json}}-->
 
+<!--<div #charts id="test">-->
+<!--</div>-->
+
+<chart [options]="options"></chart>
+<div *ngIf="type == 'lineChart'">
+  <div class="row">
+    <div class="col-6">
+      <div class="custom-control custom-checkbox">
+        <input type="checkbox" class="custom-control-input" name="hm" id="hm" [(ngModel)]="showHeatmap" (change)="setData('hm', showHeatmap)">
+        <label class="custom-control-label" for="hm">Heatmap</label>
+      </div>
+    </div>
+    <div class="col-6">
+      <div class="custom-control custom-checkbox">
+        <input type="checkbox" class="custom-control-input" name="dt" id="dt" [(ngModel)]="showTable" (change)="setData('dt', showTable)">
+        <label class="custom-control-label" for="dt">Data-table</label>
+      </div>
+    </div>
+  </div>
+</div>
