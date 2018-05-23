@@ -84,8 +84,15 @@ const lineChart = {
       }
     }
   },
-  series: [
-    { // data
+  plotOptions: {
+    series: {
+      cursor: 'pointer',
+      point: {
+        events: {}
+      }
+    }
+  },
+  series: [/*{ // data
       name: 'C1',
       allowPointSelect: true,
       data: [{name: 'p1', y: 7, clientId: 'client1', rejected: false},
@@ -107,44 +114,45 @@ const lineChart = {
         {name: 'p17', y: 18.2, clientId: 'client17', rejected: false},
         {name: 'p18', y: 21.5, clientId: 'client18', rejected: false},
         {name: 'p19', y: 25.2, clientId: 'client19', rejected: false}]
-    }, {
-      id: 'acc',
-      name: 'C2',
-      // data:[-0.2, 0.8, 5.7, 14.5, 18.2, 21.5, 24.8, 24.1, 20.1, 14.1, 8.6, 2.5, 17, 18.6, 17.9, 14.3, 9, 3.9, 1, 19],
-      data: [
-        {name: 'p1', y: -0.2, clientId: 'client1', rejected: false, x: 0},
-        {name: 'p2', y: 0.8, clientId: 'client2', rejected: false, x: 1},
-        {name: 'p3', y: 5.7, clientId: 'client3', rejected: false, x: 2},
-        {name: 'p4', y: 11.3, clientId: 'client4', rejected: false, x: 3},
-        {name: 'p5', y: 17, clientId: 'client5', rejected: false, x: 4},
-        {name: 'p6', y: 22, clientId: 'client6', rejected: false, x: 5},
-        {name: 'p7', y: 24.8, clientId: 'client7', rejected: false, x: 6},
-        {name: 'p8', y: 24.1, clientId: 'client8', rejected: false, x: 7},
-        {name: 'p9', y: 20.1, clientId: 'client9', rejected: false, x: 8},
-        {name: 'p10', y: 14.1, clientId: 'client10', rejected: false, x: 9},
-        {name: 'p11', y: 8.6, clientId: 'client11', rejected: false, x: 10},
-        {name: 'p12', y: 2.5, clientId: 'client12', rejected: false, x: 11},
-        {name: 'p13', y: 17, clientId: 'client13', rejected: false, x: 12},
-        {name: 'p14', y: 18.6, clientId: 'client14', rejected: false, x: 13},
-        {name: 'p15', y: 17.9, clientId: 'client15', rejected: false, x: 14},
-        {name: 'p16', y: 14.3, clientId: 'client16', rejected: false, x: 15},
-        {name: 'p17', y: 9, clientId: 'client17', rejected: false, x: 16},
-        {name: 'p18', y: 3.9, clientId: 'client18', rejected: false, x: 17},
-        {name: 'p19', y: 1, clientId: 'client19', rejected: false, x: 18},
-        {name: 'p16', x: 19, y: 14.3, clientId: 'client16', rejected: true},
-      ]
-    }, {
-      name: 'C2',
-      dashStyle: 'dot',
-      color: 'black',
-      linkedTo: 'acc',    //link to previous series data
-      data: [
-        {name: 'p16', x: 19, y: 14.3, clientId: 'client16', rejected: true},
-        {name: 'p17', x: 20, y: 9, clientId: 'client17', rejected: true},
-        {name: 'p18', x: 21, y: 3.9, clientId: 'client18', rejected: true},
-        {name: 'p19', x: 22, y: 1, clientId: 'client19', rejected: true}
-      ]
-    }
+    }, */{
+    id: 'acc',
+    name: 'C2',
+    color: 'orange',
+    // data:[-0.2, 0.8, 5.7, 14.5, 18.2, 21.5, 24.8, 24.1, 20.1, 14.1, 8.6, 2.5, 17, 18.6, 17.9, 14.3, 9, 3.9, 1, 19],
+    data: [
+      {name: 'p1', y: -0.2, clientId: 'client1', rejected: false, x: 0},
+      {name: 'p2', y: 0.8, clientId: 'client2', rejected: false, x: 1},
+      {name: 'p3', y: 5.7, clientId: 'client3', rejected: false, x: 2},
+      {name: 'p4', y: 11.3, clientId: 'client4', rejected: false, x: 3},
+      {name: 'p5', y: 17, clientId: 'client5', rejected: false, x: 4},
+      {name: 'p6', y: 22, clientId: 'client6', rejected: false, x: 5},
+      {name: 'p7', y: 24.8, clientId: 'client7', rejected: false, x: 6},
+      {name: 'p8', y: 24.1, clientId: 'client8', rejected: false, x: 7},
+      {name: 'p9', y: 20.1, clientId: 'client9', rejected: false, x: 8},
+      {name: 'p10', y: 14.1, clientId: 'client10', rejected: false, x: 9},
+      {name: 'p11', y: 8.6, clientId: 'client11', rejected: false, x: 10},
+      {name: 'p12', y: 2.5, clientId: 'client12', rejected: false, x: 11},
+      {name: 'p13', y: 17, clientId: 'client13', rejected: false, x: 12},
+      {name: 'p14', y: 18.6, clientId: 'client14', rejected: false, x: 13},
+      {name: 'p15', y: 17.9, clientId: 'client15', rejected: false, x: 14},
+      {name: 'p16', y: 14.3, clientId: 'client16', rejected: false, x: 15},
+      {name: 'p17', y: 9, clientId: 'client17', rejected: false, x: 16},
+      {name: 'p18', y: 3.9, clientId: 'client18', rejected: false, x: 17},
+      {name: 'p19', y: 1, clientId: 'client19', rejected: false, x: 18}
+      // {name: 'p16', x: 19, y: 14.3, clientId: 'client16', rejected: true},
+    ]
+  }, {
+    name: 'C2-rejected',
+    dashStyle: 'dot',
+    color: 'orange',
+    linkedTo: 'acc',    //link to previous series data
+    data: [
+      {name: 'p20', x: 19, y: 7.3, clientId: 'client20', rejected: true},
+      {name: 'p21', x: 20, y: 4.5, clientId: 'client21', rejected: true},
+      {name: 'p22', x: 21, y: 1.9, clientId: 'client22', rejected: true},
+      {name: 'p23', x: 22, y: 0.5, clientId: 'client23', rejected: true}
+    ]
+  }
   ]
 };
 
@@ -216,4 +224,14 @@ const sampleConfig = {
   }
 };
 
-export {lineChartSingle, lineChart, heatmap};
+const dataTable = {
+  showActions: false,
+  rowSelection: true,
+  sortEnable: true,
+  sortableColumns: ['ALL'],
+  searchEnable: true,
+  paginationType: 'simple',
+  dataCount: 5
+};
+
+export {lineChartSingle, lineChart, heatmap, dataTable};

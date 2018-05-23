@@ -4,7 +4,7 @@
 <!--<div #charts id="test">-->
 <!--</div>-->
 
-<chart [options]="options"></chart>
+<chart [options]="options" (load)="saveInstance($event.context)"></chart>
 
 <div>
   <div class="row">

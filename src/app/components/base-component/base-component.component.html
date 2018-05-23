@@ -1,0 +1,24 @@
+<!--
+[apiConfig]="dtApiConfig"
+
+apiconfig will be provided by the component rendering base-component
+{
+  lineChart: {
+    endPoint: '',
+    params: ''  // populated via filters selected
+  },
+  heatMap: {
+    endPoint: '',
+    params: ''  // populated via filters selected
+  },
+  dataTable: {
+    endPoint: '',
+    params: ''  // populated via filters selected
+  }
+}
+-->
+
+<app-line-chart selection="multiple" type="lineChart"
+           (voted)="onVoted($event)" [config]="localConfig.lineChart"></app-line-chart>
+<app-heat-map [show]="showHeatmap" type="heatMap" [config]="localConfig.heatmap"></app-heat-map>
+<app-data-table [show]="showDatatable" [config]="localConfig.dataTable"></app-data-table>

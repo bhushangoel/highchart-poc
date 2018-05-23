@@ -1,15 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, Input} from '@angular/core';
+// global chart config
+import {baseChart} from '../config/highchart.config';
 
 @Component({
   selector: 'app-heat-map',
-  template: '<chart [options]="options"></chart>',
+  templateUrl: './heat-map.component.html',
   styleUrls: ['./heat-map.component.css']
 })
 export class HeatMapComponent implements OnInit {
+  options: Object;
+  @Input() show: boolean;
+  @Input() config;
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
+    this.options = this.config;
   }
 
 }
