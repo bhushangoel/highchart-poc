@@ -82,6 +82,13 @@ export class LineChartComponent implements OnInit {
 
     // TODO: remove hack of setting options direclty
     this.options = this.chartConfig;
+
+    this.options.series.map(s => {
+      const zones = this.addZones(s);
+      s['zones'] = zones;
+    });
+
+
     this.options['tooltip'] = {
       formatter: function () {
         return `<b>Client Id: </b> ${this.series.data[this.series.data.indexOf(this.point)].clientId}<br>
@@ -91,8 +98,9 @@ export class LineChartComponent implements OnInit {
     let self = this;
     this.options.plotOptions.series.point.events = {
       click: function () {
-        console.log('this here :: ', this, this.series);
-        self.cleanSeries(this.y, this.series);
+        console.log('this here :: ', this);
+        let seriesId = this.series.userOptions.id;
+        self.cleanSeries(this.x, seriesId);
       }
     };
 
@@ -100,64 +108,67 @@ export class LineChartComponent implements OnInit {
     return;
   }
 
-  cleanSeries(point, series) {
-    let pointIdx = series.data.findIndex((s) => {
-      return s.y == point;
-    });
-    console.log('pointIdx :: ', pointIdx);
-
-    for (let i = pointIdx; i < series.data.length; i++) {
-      series.data[i].rejected = true;
-    }
-    let rejectedSeries = series.data.filter(s => {
-      return s.rejected;
+  cleanSeries(point, seriesId) {
+    let series = this.chart.get(seriesId);
+    console.log('series :: ', series);
+    series.data.map(d => {
+      if (d.x === point || d.x === point + 2) {
+        d.rejected = true;
+      }
     });
 
-    console.log('rejectedSeries :: ', rejectedSeries);
-    console.log('this.chart.series[1].data :: ', this.chart.series[1].data);
-    this.chart.series[1].addPoint(rejectedSeries);
-    console.log('this chart 2 :: ', this.chart.series[1]);
-// this.options.series[0].data = [finalData];
+    const zones = this.addZones(series);
+    console.log('this options here 22 :: ', this.options, zones);
+    series.update({zones});
+    console.log('this.chart :: ', this.chart);
+    // this.chart.series = this.options.series;
+    // this.chart.redraw();
+  }
 
-    return;
-    console.log('series.data :: ', series.data);
-    let pointIdx = series.data.findIndex((s) => {
-      return s.y == point;
-    });
-    console.log('pointIdx :: ', pointIdx);
+  // show rejected points on graph logic
+  addZones(series) {
+    console.log('addZones series :: ', series);
+    return this.createZoneData(series.data);
+  }
 
-    for (let i = pointIdx; i < series.data.length; i++) {
-      series.data[i].rejected = true;
-    }
-    let rejectedSeries = series.data.filter(s => {
-      return s.rejected;
-    });
-    let acceptedSeries = series.data.filter(s => {
-      return !s.rejected;
+  createZoneData(data) {
+    let rejectedData = data.filter(function (d) {
+      return d.rejected;
+    }).map(function (d1) {
+      return d1.x;
     });
 
-    console.log('rejectedSeries :: ', rejectedSeries);
-    console.log('acceptedSeries :: ', acceptedSeries);
+    console.log(rejectedData);
 
-    console.log('series.data :: ', series.data);
-    let idxAccept = this.options.series.findIndex((s) => {
-      console.log('in findIndex :: ', s.name, series.name);
-      return `${s.name}` === `${series.name}`;
+    // TODO: fix logic
+    let chunks = [];
+    let prev = 0;
+    let result = [];
+
+    rejectedData.forEach(current => {
+      if (current - prev !== 1) {
+        chunks.push([]);
+      }
+      chunks[chunks.length - 1].push(current);
+      prev = current;
     });
 
-    let idxReject = this.options.series.findIndex((s) => {
-      console.log('in findIndex :: ', s.name, series.name);
-      return `${s.name}` === `${series.name}-rejected`;
+    chunks.forEach(chunk => {
+      if (chunk.length > 1) {
+        result.push({start: chunk[0], end: chunk[chunk.length - 1]});
+      }
     });
 
-    console.log('idx :: ', idxAccept, idxReject);
-    this.chart.series[idxAccept].data = acceptedSeries;
+    return this.createZones(result);
+  }
 
-    let newRejectedData = this.chart.series[idxReject].data.concat(rejectedSeries);
-    console.log('newRejectedData :: ', newRejectedData);
-    this.chart.series[idxReject].data = newRejectedData;
-    console.log('this chart 2 :: ', this.chart);
-  };
+  createZones(results) {
+    let zones = [];
+    results.forEach(record => {
+      zones.push({value: record.start, dashStyle: 'solid'}, {value: record.end, dashStyle: 'dot'});
+    });
+    return zones;
+  }
 
   setData(type, value) {
     this.voted.emit({type: type, value: value});
