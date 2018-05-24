@@ -1,4 +1,4 @@
-var seriesData = [
+var seriesData1 = [
   {name: 'p1', y: -0.2, clientId: 'client1', rejected: false, x: 0},
   {name: 'p2', y: 0.8, clientId: 'client2', rejected: false, x: 1},
   {name: 'p3', y: 5.7, clientId: 'client3', rejected: true, x: 2},
@@ -57,5 +57,14 @@ function cleanData() {
   console.log(result)
 }
 
-cleanData();
+//cleanData();
+
+
+seriesData.forEach(function(s) {
+  s['id'] = s.name
+})
+var fs = require('fs')
+fs.writeFile('series.json', JSON.stringify(seriesData), function(err) {
+  console.log("successfully written")
+})
 

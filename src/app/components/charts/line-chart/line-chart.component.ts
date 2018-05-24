@@ -23,7 +23,7 @@ export class LineChartComponent implements OnInit {
   @ViewChild('charts') public chartEl: ElementRef;
   @Output() voted: EventEmitter<any> = new EventEmitter();
   showHeatmap: boolean = false;
-  showTable: boolean = true;
+  showTable: boolean = false;
   options: Object;
   chart: Object;
   chartConfig;
@@ -85,14 +85,19 @@ export class LineChartComponent implements OnInit {
 
     this.options.series.map(s => {
       const zones = this.addZones(s);
+      s['zoneAxis'] = 'x';
       s['zones'] = zones;
     });
 
 
     this.options['tooltip'] = {
       formatter: function () {
-        return `<b>Client Id: </b> ${this.series.data[this.series.data.indexOf(this.point)].clientId}<br>
-                <b>Quality Flag: </b> ${this.series.data[this.series.data.indexOf(this.point)].rejected ? 'Rejected' : 'Accepted'}</br>`;
+        return `<b>Client Id: </b> ${this.series.data[this.series.data.indexOf(this.point)].clientID}<br>
+                <b>Client Price: </b> ${this.series.data[this.series.data.indexOf(this.point)].y}<br>
+                <b>Client Median: </b> ${this.series.data[this.series.data.indexOf(this.point)].median}<br>
+                <b>KO Range: </b> ${this.series.data[this.series.data.indexOf(this.point)].KORange}<br>
+                <b>Quality Flag: </b> ${this.series.data[this.series.data.indexOf(this.point)].quality === 'F' ? 'Failed' : 'Passed'}<br>
+                <b>Reason: </b> ${this.series.data[this.series.data.indexOf(this.point)].reason}<br>`;
       }
     };
     let self = this;
@@ -112,8 +117,8 @@ export class LineChartComponent implements OnInit {
     let series = this.chart.get(seriesId);
     console.log('series :: ', series);
     series.data.map(d => {
-      if (d.x === point || d.x === point + 2) {
-        d.rejected = true;
+      if (d.x === point || d.x < point + 2) {
+        d.quality = 'F';
       }
     });
 
@@ -133,7 +138,7 @@ export class LineChartComponent implements OnInit {
 
   createZoneData(data) {
     let rejectedData = data.filter(function (d) {
-      return d.rejected;
+      return d.quality === 'F';
     }).map(function (d1) {
       return d1.x;
     });

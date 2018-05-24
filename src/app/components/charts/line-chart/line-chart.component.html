@@ -4,9 +4,10 @@
 <!--<div #charts id="test">-->
 <!--</div>-->
 
-<chart [options]="options" (load)="saveInstance($event.context)"></chart>
+<chart [options]="options" (load)="saveInstance($event.context)"
+       style="display:block; height: 700px !important; width: 1200px !important;"></chart>
 
-<div>
+<!--<div>
   <div class="row">
     <div class="col-6">
       <div class="custom-control custom-checkbox">
@@ -21,4 +22,4 @@
       </div>
     </div>
   </div>
-</div>
+</div>-->

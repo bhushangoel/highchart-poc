@@ -7,7 +7,7 @@ import * as config from './base-component.config';
   styleUrls: ['./base-component.component.css']
 })
 export class BaseComponentComponent implements OnInit {
-  showDatatable: boolean = true;
+  showDatatable: boolean = false;
   showHeatmap: boolean = false;
   localConfig;
 
