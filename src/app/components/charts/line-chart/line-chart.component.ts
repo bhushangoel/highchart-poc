@@ -27,6 +27,7 @@ export class LineChartComponent implements OnInit {
   options: Object;
   chart: Object;
   chartConfig;
+  cachedData = {};
   count = 0;
 
   constructor(private ds: DataService, private lcs: LinechartService) {
@@ -89,7 +90,21 @@ export class LineChartComponent implements OnInit {
       s['zones'] = zones;
     });
 
+    this.options.chart['backgroundColor'] = '#e6fff1';
 
+    console.log('this.options here :: ', this.options);
+    this.options.series.map(s => {
+      s.data.map(d => {
+        this.cachedData[s.id] = {
+          A: JSON.parse(JSON.stringify(s.data)),
+          P: JSON.parse(JSON.stringify(s.data.filter(d1 => d1.quality === 'P')))
+        };
+      });
+
+      s.data = this.cachedData[s.id]['P'].slice(0);
+    });
+
+    // tool tip formatter
     this.options['tooltip'] = {
       formatter: function () {
         return `<b>Client Id: </b> ${this.series.data[this.series.data.indexOf(this.point)].clientID}<br>
@@ -100,13 +115,35 @@ export class LineChartComponent implements OnInit {
                 <b>Reason: </b> ${this.series.data[this.series.data.indexOf(this.point)].reason}<br>`;
       }
     };
+
+    // point click event
     let self = this;
     this.options.plotOptions.series.point.events = {
       click: function () {
-        console.log('this here :: ', this);
-        let seriesId = this.series.userOptions.id;
-        self.cleanSeries(this.x, seriesId);
+        console.log('point selected');
       }
+    };
+
+    // custom button showing on top - for toggle between show all and show included
+    this.options.exporting.buttons.customButton['onclick'] = function () {
+
+      console.log('hey..', self.cachedData);
+      this.series.map(s => {
+        console.log('series :: ', s, typeof s.data, self.cachedData[s.userOptions.id]);
+        if (s.visible && self.cachedData[s.userOptions.id]['P'].length !== self.cachedData[s.userOptions.id]['A'].length) {
+          let button = this.exportSVGElements[4];
+          let $button = button.text.textStr;
+          let text = $button === 'SHOW ALL' ? 'SHOW INCLUDED' : 'SHOW ALL';
+          //
+          button.attr({
+            text: text
+          });
+          let identifier = $button === 'SHOW ALL' ? 'A' : 'P';
+          console.log('identifier :: ', identifier, s.userOptions.id);
+
+          s.setData(self.cachedData[s.userOptions.id][identifier]);
+        }
+      });
     };
 
     console.log('this options here :: ', this.options);
